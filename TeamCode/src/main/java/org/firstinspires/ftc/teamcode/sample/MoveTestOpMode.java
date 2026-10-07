@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.sample;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Autonomous
-public class MoveTest extends LinearOpMode {
+public class MoveTestOpMode extends LinearOpMode {
     DcMotorEx lf, rf, lb, rb;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,43 +39,28 @@ public class MoveTest extends LinearOpMode {
             lb.setPower(1);
             rb.setPower(1);
 
-            sleep(1000);
+            sleep(400);
 
             lf.setPower(0);
             rf.setPower(0);
             lb.setPower(0);
             rb.setPower(0);
 
-            sleep(100);
-
-            lf.setPower(1);
-            rf.setPower(0);
-            lb.setPower(1);
-            rb.setPower(0);
-
             sleep(1000);
-
-            lf.setPower(0);
-            rf.setPower(0);
-            lb.setPower(0);
-            rb.setPower(0);
-
-            sleep(100);
-
 
             lf.setPower(-1);
             rf.setPower(1);
             lb.setPower(1);
             rb.setPower(-1);
 
-            sleep(1000);
+            sleep(400);
 
             lf.setPower(0);
             rf.setPower(0);
             lb.setPower(0);
             rb.setPower(0);
 
-            sleep(100);
+            sleep(1000);
 
 
             lf.setPower(1);
@@ -84,7 +68,7 @@ public class MoveTest extends LinearOpMode {
             lb.setPower(1);
             rb.setPower(1);
 
-            sleep(1000);
+            sleep(400);
 
             lf.setPower(0);
             rf.setPower(0);
