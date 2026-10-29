@@ -8,22 +8,26 @@ import com.pedropathing.ivy.behaviors.InterruptedBehavior;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorImplEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import java.util.Set;
 
 public class GamePad implements Command {
-    private DcMotorEx r1, r2, l1, l2;
+    private DcMotorEx lf, lb, rf, rb;
     private LinearOpMode opMode;
     public GamePad(LinearOpMode opMode) {
         this.opMode = opMode;
-        r1 = opMode.hardwareMap.get(DcMotorImplEx.class, "r1"); /* rb */
-        r2 = opMode.hardwareMap.get(DcMotorImplEx.class, "r2"); /* rf */
-        l1 = opMode.hardwareMap.get(DcMotorImplEx.class, "l1"); /* lf */
-        l2 = opMode.hardwareMap.get(DcMotorImplEx.class, "l2"); /* lb */
+        lf = opMode.hardwareMap.get(DcMotorImplEx.class, "lf");
+        lb = opMode.hardwareMap.get(DcMotorImplEx.class, "lb");
+        rf = opMode.hardwareMap.get(DcMotorImplEx.class, "rf");
+        rb = opMode.hardwareMap.get(DcMotorImplEx.class, "rb");
+
+        rf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rb.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     @Override
     public Set<Object> requirements() {
-        return Set.of(r1, r2, l1, l2);
+        return Set.of(lf, lb, rf, rb);
     }
 
     @Override
@@ -58,35 +62,30 @@ public class GamePad implements Command {
 
     @Override
     public void execute() {
-        if (opMode.gamepad1.right_bumper) {
-            r1.setPower(1);
-        } else {
-            r1.setPower(0);
-        }
+        double y = -opMode.gamepad1.left_stick_y - opMode.gamepad1.right_stick_y * 0.8; // Remember, Y stick is reversed!
+        double x = opMode.gamepad1.left_stick_x + opMode.gamepad1.right_stick_x * 0.8;
+        double rx = -opMode.gamepad1.left_trigger + opMode.gamepad1.right_trigger;
+
         if (opMode.gamepad1.left_bumper) {
-            r2.setPower(1);
-        } else {
-            r2.setPower(0);
+            rx = rx - 0.6;
+        } else if (opMode.gamepad1.right_bumper) {
+            rx = rx + 0.6;
         }
-        if (opMode.gamepad1.back) {
-            l1.setPower(1);
-        } else {
-            l1.setPower(0);
-        }
-        if (opMode.gamepad1.ps) {
-            l2.setPower(1);
-        } else {
-            l2.setPower(0);
-        }
-        opMode.gamepad1.rumble(1000);
-        opMode.sleep(1000);
+        y = Math.pow(y, 3);
+        x = Math.pow(x, 3);
+        rx = Math.pow(rx, 3);
+
+        lf.setPower(y + x + rx);
+        lb.setPower(y - x + rx);
+        rf.setPower(y - x - rx);
+        rb.setPower(y + x - rx);
     }
 
     @Override
     public void end(EndCondition endCondition) {
-        r1.setPower(0);
-        r2.setPower(0);
-        l1.setPower(0);
-        l2.setPower(0);
+        lf.setPower(0);
+        lb.setPower(0);
+        rf.setPower(0);
+        rb.setPower(0);
     }
 }
