@@ -16,5 +16,6 @@ dependencies {
     implementation 'org.firstinspires.ftc:Vision:12.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.pedropathing.ivy:pedro:1.1.1'
+    implementation 'org.ejml:ejml-all:0.44.0'
 }
 
