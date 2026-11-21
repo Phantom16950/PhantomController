@@ -17,7 +17,7 @@ public class FeedForwardController {
         this.target = target;
     }
 
-    public double edefg(){
+    public double update(){
         return feeds.getkT()*target+ feeds.getkS();
     }
 

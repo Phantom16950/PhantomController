@@ -15,11 +15,11 @@ public class OpModes extends LinearOpMode {
         GunMotor gunMotor = new GunMotor(this);
         waitForStart();
         Scheduler.schedule(gunMotor);
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
             Scheduler.execute();
         }
 
-        }
     }
+}
 
 

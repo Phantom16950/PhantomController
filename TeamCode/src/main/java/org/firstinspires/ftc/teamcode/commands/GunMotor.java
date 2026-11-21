@@ -22,7 +22,7 @@ public class GunMotor implements Command {
 
     public GunMotor(LinearOpMode opMode) {
         this.opMode = opMode;
-        gun = opMode.hardwareMap.get(DcMotorEx.class, "gun");
+        gun = opMode.hardwareMap.get(DcMotorEx.class, "siska");
     }
 
     @Override
@@ -70,13 +70,15 @@ public class GunMotor implements Command {
             } else if (t == 0) {
                 t = -76;
             }
+            opMode.sleep(200);
         }
 
         if (t == -76) {
-            gun.setPower(1);
-        } else if (t == 0) {
+            gun.setPower(0.9);
+        } else  if (t == 0) {
             gun.setPower(0);
         }
+//
 
     }
 
